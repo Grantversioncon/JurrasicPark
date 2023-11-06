@@ -15,7 +15,7 @@ void loop() {
   delayMicroseconds(2);
   // Sets the trigPin on HIGH state for 10 micro seconds
   digitalWrite(trigPin, HIGH);
-  delayMicroseconds(12);
+  delayMicroseconds(12); // I changed the 10 seconds to 12 to test Pull Request 
   digitalWrite(trigPin, LOW);
   // Reads the echoPin, returns the sound wave travel time in microseconds
   duration = pulseIn(echoPin, HIGH);
