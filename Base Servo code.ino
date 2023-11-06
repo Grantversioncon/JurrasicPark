@@ -29,5 +29,6 @@ void loop() {
     tone() //pin, tone variable 
   } else  {
     noTone(); 
+    // after this we will add the other servo codes and figure out their movement in regard to the gate and launch pad
   }
 }
