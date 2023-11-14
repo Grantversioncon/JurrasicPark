@@ -1,34 +1,31 @@
-// defines pins numbers
-const int trigPin = 10;
-const int echoPin = 9;
-// defines variables
-long duration;
-int distance;
-void setup() {
-  pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
-  pinMode(echoPin, INPUT); // Sets the echoPin as an Input
-  Serial.begin(9600); // Starts the serial communication
-}
-void loop() {
-  // Clears the trigPin
-  digitalWrite(trigPin, LOW);
-  delayMicroseconds(2);
-  // Sets the trigPin on HIGH state for 10 micro seconds
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(12); // I changed the 10 seconds to 12 to test Pull Request 
-  digitalWrite(trigPin, LOW);
-  // Reads the echoPin, returns the sound wave travel time in microseconds
-  duration = pulseIn(echoPin, HIGH);
-  // Calculating the distance
-  distance = duration * 0.034 / 2;
-  // Prints the distance on the Serial Monitor
-  Serial.print("Distance: ");
-  Serial.println(distance);
+#include <Servo.h>
 
-  if(distance > 5){
-    tone() //pin, tone variable 
-  } else  {
-    noTone(); 
-    // after this we will add the other servo codes and figure out their movement in regard to the gate and launch pad
+const int buttonPin = 2;
+int buttonState = 0;
+int previousButtonState = 0;
+Servo myServo1;  // create first servo object to control a servo
+Servo myServo2;  // create second servo object to control another servo
+
+void setup() {
+  pinMode(buttonPin, INPUT);
+  Serial.begin(9600);
+  myServo1.attach(9); // attaches the first servo on pin 9 to the servo object
+  myServo2.attach(10); // attaches the second servo on pin 10 to the servo object
+}
+
+void loop() {
+  buttonState = digitalRead(buttonPin);
+
+  if (buttonState != previousButtonState) {
+    if (buttonState == HIGH) {
+      Serial.println("button pressed");
+      myServo1.write(90); // tell first servo to go to 90 degrees
+      myServo2.write(180); // tell second servo to go to 180 degrees, the opposite direction from 0
+    } else {
+      Serial.println("button released");
+      myServo1.write(0); // tell first servo to go back to 0 degrees
+      myServo2.write(0); // tell second servo to also go to 0 degrees
+    }
   }
+  previousButtonState = buttonState;
 }
